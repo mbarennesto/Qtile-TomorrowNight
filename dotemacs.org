@@ -1,0 +1,174 @@
+#+TITLE: Emacs config
+#+AUTHOR: Ernesto
+#+PROPERTY: header-args :tangle dotemacs.el
+
+* Startup
+  #+begin_src emacs-lisp
+(setq os-packages-path "~/emacs_packages/")
+(setq vc-follow-symlinks t)
+(prefer-coding-system 'utf-8-unix)
+  #+end_src
+
+  #+begin_src emacs-lisp
+(add-to-list 'load-path
+		 (concat os-packages-path "use-package/"))
+  #+end_src
+
+* Packages
+  #+begin_src emacs-lisp
+(package-initialize)
+(require 'use-package)
+  #+end_src
+
+  #+begin_src emacs-lisp
+(use-package package
+  :config
+  (setq package-archive-priorities
+	    '(("melpa-stable" . 2)
+	      ("MELPA" . 1)
+	      ("gnu" . 0)))
+
+  (setq package-archives
+	    '(("melpa-stable" . "https://stable.melpa.org/packages/")
+	      ("MELPA" . "https://melpa.org/packages/")
+	      ("gnu" . "https://elpa.gnu.org/packages/")))
+  )
+  #+end_src
+
+* Themes
+  #+begin_src emacs-lisp
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :defer t
+  :init
+  (load-theme 'sanityinc-tomorrow-night t))
+  #+end_src
+
+** Doom modeline
+   #+begin_src emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+   #+end_src
+
+* Fonts
+  #+begin_src emacs-lisp
+(add-to-list 'default-frame-alist
+             '(font . "Terminus-12"))
+  #+end_src 
+
+* Completions
+  #+begin_src emacs-lisp
+(use-package company
+  :ensure t
+  :defer t
+  :config
+
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 3)
+  (setq company-selection-wrap-around t)
+  (company-tng-configure-default)
+  (setq company-quickhelp-color-background "#4F4F4F")
+  (setq company-quickhelp-color-foreground "#DCDCCC")
+
+  (global-company-mode 1))
+  #+end_src
+
+  #+begin_src emacs-lisp
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1)
+  (setq ivy-re-builders-alist
+	     '(( swiper . ivy--regex-plus)
+	       (t . ivy--regex-fuzzy))))
+  #+end_src
+
+  #+begin_src emacs-lisp
+(use-package swiper
+  :ensure t
+  :config
+  (global-set-key "\C-s" 'swiper))
+  #+end_src
+
+* Windows
+  #+begin_src emacs-lisp
+(use-package beacon
+  :ensure t
+  :config
+  (beacon-mode 1))
+  #+end_src
+
+* Shell
+  #+begin_src emacs-lisp
+(use-package vterm
+    :ensure t)
+  #+end_src
+
+* Misc
+  #+begin_src emacs-lisp
+(use-package all-the-icons
+  :ensure t)
+  #+end_src
+
+  #+begin_src emacs-lisp
+(use-package nyan-mode
+  :ensure t
+  :config
+  (nyan-mode))
+  #+end_src
+
+* General
+  #+begin_src emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Set global value for paragraph width
+(setq-default fill-column 70)
+
+;; Stop emacs from losing informations.
+(setq undo-limit 20000000)
+(setq undo-strong-limit 40000000)
+
+;; Smooth scroll
+(setq scroll-step 3)
+(setq line-number-mode t)
+(setq inhibit-startup-screen t)
+(setq ring-bell-function (quote ignore))
+
+;; Display Clock 
+(display-time)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+
+;; Turn off the toolbar
+(tool-bar-mode 0)
+
+;; add column number in the main bar
+(column-number-mode)
+
+(global-visual-line-mode)
+  #+end_src
+
+* Indentation
+  #+begin_src emacs-lisp
+(setq standard-indent 2)
+;; nil value means 'do not set tabs, ever!'
+(setq tab-stop-list nil)
+(setq indent-tabs-mode nil) 
+  #+end_src
+
+* My Functions
+  #+begin_src emacs-lisp
+(defun my/tangle-dotfiles()
+     (interactive)
+     (when (equal (buffer-file-name)
+		   (expand-file-name "~/dotemacs.org"))
+	(org-babel-tangle)
+	(message "Dotfile tangled")
+     ))
+  #+end_src
+
+* Hook
+  #+begin_src emacs-lisp
+(add-hook 'after-save-hook #'my/tangle-dotfiles)
+  #+end_src
