@@ -1,0 +1,51 @@
+! Tomorrow night Xresources palette
+*.foreground: #c4c8c5
+*.background: #1d1f21
+*.color0:     #373b41
+*.color8:     #373b41
+*.color1:     #cc6666
+*.color9:     #cc6666
+*.color2:     #b5bd68
+*.color10:    #b5bd68
+*.color3:     #f0c574
+*.color11:    #f0c574
+*.color4:     #80a1bd
+*.color12:    #80a1bd
+*.color5:     #b294ba
+*.color13:    #b294ba
+*.color6:     #8abdb6
+*.color14:    #8abdb6
+*.color7:     #fffefe
+*.color15:    #fffefe
+
+! ------------------------------------------------------------------------------
+! Font configuration
+! ------------------------------------------------------------------------------
+
+URxvt*font:				xft:Terminus:regular:size=12
+URxvt*boldFont:			xft:Terminus:bold:size=12
+URxvt*italicFont:		xft:Terminus:italic:size=12
+URxvt*boldItalicFont:	xft:Terminus:bold italic:size=12
+
+
+! ------------------------------------------------------------------------------
+! URxvt configs
+! ------------------------------------------------------------------------------
+
+! font spacing
+URxvt*letterSpace:		0
+URxvt.lineSpace:		0
+
+! general settings
+URxvt*saveline:			15000
+URxvt*termName:			rxvt-256color
+URxvt*iso14755:			false
+URxvt*urgentOnBell:		true
+
+! appearance
+URxvt*depth:			24
+URxvt*scrollBar:		false
+URxvt*scrollBar_right:	false
+URxvt*internalBorder:	24
+URxvt*externalBorder:	0
+URxvt.geometry:			84x22
